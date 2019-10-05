@@ -28,7 +28,10 @@
     "webpack-dev-server": "^3.8.2"
   },
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-transform-react-jsx": "^7.3.0",
     "material-components-web": "^3.2.0",
+    "preact-async-route": "^2.2.1",
     "preact-material-components": "^1.6.0",
     "preact-router": "^3.0.1",
     "socket.io": "^2.3.0"

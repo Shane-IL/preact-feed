@@ -1,39 +1,14 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const webpack = require('webpack');
-
-/*
- * SplitChunksPlugin is enabled by default and replaced
- * deprecated CommonsChunkPlugin. It automatically identifies modules which
- * should be splitted of chunk by heuristics using module duplication count and
- * module category (i. e. node_modules). And splits the chunks…
- *
- * It is safe to remove "splitChunks" from the generated configuration
- * and was added as an educational example.
- *
- * https://webpack.js.org/plugins/split-chunks-plugin/
- *
- */
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
-/*
- * We've enabled HtmlWebpackPlugin for you! This generates a html
- * page for you when you compile webpack, which will make you start
- * developing and prototyping faster.
- *
- * https://github.com/jantimon/html-webpack-plugin
- *
- */
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
 	mode: 'development',
 
-	entry: {
-		bundle: './src/index.js'
-	},
+	entry: './src/index.js',
 
 	output: {
 		filename: '[name].[chunkhash].js',
@@ -57,7 +32,14 @@ module.exports = {
 				loader: 'babel-loader',
 
 				options: {
-					plugins: ['syntax-dynamic-import'],
+					plugins: [
+						['syntax-dynamic-import'], 
+						['@babel/plugin-proposal-class-properties'], 
+						["@babel/plugin-transform-react-jsx", {
+							"pragma": "h",
+							"pragmaFrag": "Fragment",
+						  }]
+					],
 
 					presets: [
 						[
@@ -108,27 +90,13 @@ module.exports = {
 			}
 		]
 	},
-
-	optimization: {
-		splitChunks: {
-			cacheGroups: {
-				vendors: {
-					priority: -10,
-					test: /[\\/]node_modules[\\/]/
-				}
-			},
-
-			chunks: 'async',
-			minChunks: 1,
-			minSize: 30000,
-			name: true
-		}
-	},
-
+	devtool: isDevelopment ? "inline-sourcemap" : false,
 	devServer: {
-		open: true
+		compress: true,
+		open: true,
+		port: 5000
 	},
 	resolve: {
-		extensions: ['.js', '.jsx', '.scss']
+		extensions: ['.js', '.jsx', '.css', '.sass']
 	}
 };
