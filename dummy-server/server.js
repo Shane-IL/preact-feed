@@ -37,7 +37,7 @@ const postGenerator = setInterval(() => generatePost(socket, postGenerator), 300
 io.on('connection', socket => {
     console.log('client app connected');
     socket.on('generatePost', () => generatePost(socket, _totalCount, postGenerator));
-    socket.on('pullCollection', () => socket.emit('initCollection', _collection));
+    socket.on('getCollection', () => socket.emit('initCollection', _collection));
 });
 
 
